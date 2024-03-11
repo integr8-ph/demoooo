@@ -1,0 +1,28 @@
+version: '3'
+services:
+  main:
+    build:
+      context: E:\GABRIEL\ctrm
+      dockerfile: E:\GABRIEL\ctrm\Dockerfile
+    volumes:
+      - E:\GABRIEL\ctrm/:/usr/src/main:ro
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    ports: 
+      - 8000:8000
+    networks:
+      - web
+
+  client:
+    build:
+      context: E:\GABRIEL\gabriel-client-refactored
+      dockerfile: E:\GABRIEL\gabriel-client-refactored\Dockerfile
+    volumes:
+      - E:\GABRIEL\gabriel-client-refactored/:/usr/src/client:ro
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8001 --reload
+    ports: 
+      - 8001:8001
+    networks:
+      - web
+networks:
+  web:
+    driver: bridge
